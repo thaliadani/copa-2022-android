@@ -38,7 +38,7 @@ class NotificationMatcherWorker(
             val initialDelay = Duration.between(LocalDateTime.now(), matchDate).minusMinutes(5)
             val inputData = workDataOf(
                 NOTIFICATION_TITLE_KEY to "Se prepare que o jogo vai começar",
-                NOTIFICATION_CONTENT_KEY to "Hoje tem ${team1.flag} vs ${team2.flag}",
+                NOTIFICATION_CONTENT_KEY to "Hoje tem ${team1.displayName} vs ${team2.displayName}",
             )
 
             WorkManager.getInstance(context)

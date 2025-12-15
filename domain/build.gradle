@@ -1,17 +1,65 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id "java-library"
-    id "org.jetbrains.kotlin.jvm"
-    id "kotlin-kapt"
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+android {
+    namespace = "me.dio.copa.catar.domain"
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 36
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation 'androidx.annotation:annotation:1.8.0'
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2") // Update coroutines
 
-    kapt("com.google.dagger:dagger-compiler:2.44")
-    implementation("com.google.dagger:dagger:2.44")
+    // It's recommended to update Dagger as well
+    kapt("com.google.dagger:dagger-compiler:2.57.2")
+    implementation("com.google.dagger:dagger:2.57.2")
+}
+
+kapt {
+    arguments {
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+        arg("-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+    }
 }
