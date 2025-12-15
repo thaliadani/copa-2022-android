@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:right="21dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#007A5E" />
-        </shape>
-    </item>
-    <item android:left="11dp" android:right="11dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#CE1126" />
-        </shape>
-    </item>
-    <item android:left="21dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#FCD116" />
-        </shape>
-    </item>
-</layer-list>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <path
+        android:fillColor="#007a5e"
+        android:pathData="M0,0h16v48h-16z" />
+    <path
+        android:fillColor="#fcd116"
+        android:pathData="M16,0h16v48h-16z" />
+    <path
+        android:fillColor="#ce1126"
+        android:pathData="M32,0h16v48h-16z" />
+    <path
+        android:fillColor="#fcd116"
+        android:pathData="M24,18l-4,12h12l-8-8 8-8z" />
+</vector>

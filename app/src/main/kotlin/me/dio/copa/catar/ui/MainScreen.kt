@@ -1,14 +1,17 @@
 package me.dio.copa.catar.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -36,8 +39,9 @@ import androidx.compose.ui.unit.dp
 import me.dio.copa.catar.R
 import me.dio.copa.catar.domain.model.Match
 import me.dio.copa.catar.domain.model.Team
-import me.dio.copa.catar.ui.theme.Gold
 import me.dio.copa.catar.ui.theme.Black
+import me.dio.copa.catar.ui.theme.Copa2022Theme
+import me.dio.copa.catar.ui.theme.Gold
 import me.dio.copa.catar.ui.viewmodel.MainUiState
 import java.time.format.DateTimeFormatter
 
@@ -55,7 +59,8 @@ fun MainScreen(
             TopAppBar(
                 title = { Text(text = "Copa 2022") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Gold
+                    containerColor = Gold,
+                    titleContentColor = Black
                 )
             )
         }
@@ -78,7 +83,12 @@ fun MainScreen(
 
             when (uiState) {
                 MainUiState.Loading -> {
-                    Text(modifier = Modifier.padding(it), text = "Loading...")
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Loading...")
+                    }
                 }
 
                 is MainUiState.Success -> {
@@ -90,7 +100,12 @@ fun MainScreen(
                 }
 
                 is MainUiState.Error -> {
-                    Text(modifier = Modifier.padding(it), text = "Error!")
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Error!")
+                    }
                 }
             }
         }
@@ -114,7 +129,7 @@ fun MatchCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
-            Text(text = match.date.format(formatter))
+            Text(text = match.date.format(formatter), color = Black)
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
@@ -123,7 +138,7 @@ fun MatchCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Team(team = match.team1)
-                Text(text = "x", modifier = Modifier.padding(horizontal = 16.dp))
+                Text(text = "x", modifier = Modifier.padding(horizontal = 16.dp),color = Black)
                 Team(team = match.team2)
             }
 
@@ -151,14 +166,15 @@ fun Team(team: Team) {
             painter = painterResource(id = getTeamFlag(team = team)),
             contentDescription = null,
             modifier = Modifier
-                .width(64.dp)
-                .height(48.dp)
+                .size(48.dp)
         )
+        Spacer(modifier = Modifier.size(8.dp))
         Text(
             text = team.displayName,
             modifier = Modifier.padding(start = 8.dp),
             style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = Black
         )
     }
 }
@@ -169,6 +185,9 @@ fun getTeamFlag(team: Team): Int {
         "BR" -> R.drawable.br
         "FR" -> R.drawable.fr
         "AR" -> R.drawable.ar
+        "RS" -> R.drawable.rs
+        "CH" -> R.drawable.ch
+        "CM" -> R.drawable.cm
         else -> R.drawable.br
     }
 }
@@ -176,5 +195,7 @@ fun getTeamFlag(team: Team): Int {
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen(uiState = MainUiState.Loading, "", {}, {}, {})
+    Copa2022Theme {
+        MainScreen(uiState = MainUiState.Loading, "", {}, {}, {})
+    }
 }
